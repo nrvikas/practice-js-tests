@@ -1,0 +1,22 @@
+# Script file to setup the CI?CD enviroment for tests to run
+language: python
+
+python: 3.5
+sudo: required
+
+env:
+    global:
+        - TRAVIS_NODE_VERSION="6"
+
+cache:
+    - npm
+
+before_install:
+    - nvm install $TRAVIS_NODE_VERSION
+
+install:
+    npm install
+
+script:
+    npm run lint
+    npm run test
