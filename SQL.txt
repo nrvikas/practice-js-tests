@@ -1,4 +1,4 @@
-5A) Return the names of all salespeople that have an order with George
+5A) Return the names of all sales people that have an order with George
 
 Answer:
 select distinct o.SalespersonID,s.Name
@@ -9,7 +9,7 @@ where
 c.Name='George'
 
 
-5B) Return the names of all salespeople that do not have any order with George
+5B) Return the names of all sales people that do not have any order with George
 
 Answer:
 select distinct o.SalespersonID,s.Name
@@ -31,7 +31,7 @@ having count(distinct o.OrderID)>=2
 
 ---------
 
-6A) Return the name of the salesperson with the 3rd highest salary.
+6A) Return the name of the sales person with the 3rd highest salary.
 
 Answer:
 Select Sal_Rank.SalespersonID, Sal_Rank.Name, Sal_Rank.Salary
@@ -63,9 +63,12 @@ sum((o.NumberOfUnits*CostOfUnit)) as TotalOrderValue
 from #Orders as o
 group by o.CustomerID
 having sum((o.NumberOfUnits*CostOfUnit))>1000
- 
- select * from #BigOrders
 
+select * from #BigOrders
+-- CustomerID TotalOrderValue
+--4 2200.000
+--6 1500.000
+--11 4700.000
 
 6C)Return the total Amount of orders for each month, ordered by year, then month (both in--descending order)
 
