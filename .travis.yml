@@ -6,7 +6,7 @@ sudo: required
 
 env:
     global:
-        - TRAVIS_NODE_VERSION="6"
+        - TRAVIS_NODE_VERSION="12"
 
 cache:
     - npm
