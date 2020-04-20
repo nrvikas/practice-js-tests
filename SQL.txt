@@ -1,0 +1,81 @@
+5A) Return the names of all salespeople that have an order with George
+
+Answer:
+select distinct o.SalespersonID,s.Name
+from #Orders as o
+Inner join #Customer as c on c.CustomerID=o.CustomerID
+Inner join #SalesPerson as s on s.SalespersonID=o.SalespersonID
+where
+c.Name='George'
+
+
+5B) Return the names of all salespeople that do not have any order with George
+
+Answer:
+select distinct o.SalespersonID,s.Name
+from #Orders as o
+Inner join #Customer as c on c.CustomerID=o.CustomerID
+Inner join #SalesPerson as s on s.SalespersonID=o.SalespersonID
+where
+c.Name<>'George'
+
+5C) Return the names of salespeople that have 2 or more orders.
+
+Answer:
+select distinct o.SalespersonID,count(distinct o.OrderID) as No_of_Orders
+from #Orders as o
+Inner join #Customer as c on c.CustomerID=o.CustomerID
+Inner join #SalesPerson as s on s.SalespersonID=o.SalespersonID
+Group by o.SalespersonID
+having count(distinct o.OrderID)>=2
+
+---------
+
+6A) Return the name of the salesperson with the 3rd highest salary.
+
+Answer:
+Select Sal_Rank.SalespersonID, Sal_Rank.Name, Sal_Rank.Salary
+from
+(select
+s.SalespersonID,
+s.Name,
+s.Salary,
+Rank() over ( order by Salary desc) as Rank1
+from #SalesPerson as s
+) as Sal_Rank
+where Sal_Rank.Rank1=3
+
+
+6B) Create a new rollup
+table BigOrders(where columns are CustomerID,
+TotalOrderValue), and insert into that table customers whose total Amount across all
+orders is greater than 1000
+
+Answer:
+Create Table #BigOrders
+(CustomerID INT,
+TotalOrderValue Numeric (10,3))
+
+insert into #BigOrders
+select distinct
+o.CustomerID as CustomerID,
+sum((o.NumberOfUnits*CostOfUnit)) as TotalOrderValue
+from #Orders as o
+group by o.CustomerID
+having sum((o.NumberOfUnits*CostOfUnit))>1000
+ 
+ select * from #BigOrders
+
+
+6C)Return the total Amount of orders for each month, ordered by year, then month (both in--descending order)
+
+Answer:
+select
+datepart(mm, o.OrderDate) as Month_o,
+datepart(yyyy, o.OrderDate) as Year_o,
+count(distinct o.OrderID) as Orders
+from #Orders as o
+group by
+datepart(mm, o.OrderDate) ,
+datepart(yyyy, o.OrderDate)
+Order by year_o, month_o desc

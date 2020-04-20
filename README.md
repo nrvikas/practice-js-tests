@@ -1,4 +1,5 @@
 # Practice JS
+[![Build Status](https://travis-ci.com/nrvikas/practice-js-tests.svg?branch=master)](https://travis-ci.com/nrvikas/practice-js-tests.svg?branch=master)
 
 **To install and run:**
 ```npm install```
